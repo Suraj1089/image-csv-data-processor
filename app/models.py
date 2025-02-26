@@ -58,7 +58,7 @@ class Product(Base):
     serial_number: Mapped[int] = mapped_column(Integer)
     product_name: Mapped[str] = mapped_column(String)
     input_image_urls: Mapped[List[str]] = mapped_column(ARRAY(String))
-    output_image_urls: Mapped[List[str]] = mapped_column(ARRAY(String))
+    output_image_urls: Mapped[List[str]] = mapped_column(ARRAY(String), nullable=True)
 
     batch: Mapped["Batch"] = relationship("Batch", back_populates="products")
     images: Mapped[List["Image"]] = relationship("Image", back_populates="product")
@@ -69,7 +69,6 @@ class Image(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     product_id: Mapped[int] = mapped_column(Integer, ForeignKey("products.id"))
-    index: Mapped[int] = mapped_column(Integer)
     input_url: Mapped[str] = mapped_column(String)
     output_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     status: Mapped[str] = mapped_column(String, default="pending")
